@@ -6,7 +6,6 @@ import Orders from './Orders';
 import Cart from './Cart';
 import Login from './Login';
 import api from './api';
-import Homepage from './homepage';
 
 const App = ()=> {
   const [products, setProducts] = useState([]);
@@ -89,7 +88,6 @@ const App = ()=> {
               <Link to='/products'>Products ({ products.length })</Link>
               <Link to='/orders'>Orders ({ orders.filter(order => !order.is_cart).length })</Link>
               <Link to='/cart'>Cart ({ cartCount })</Link>
-              <Link to='/homepage'>Homepage</Link>
               <span>
                 Welcome { auth.username }!
                 <button onClick={ logout }>Logout</button>
@@ -115,9 +113,6 @@ const App = ()=> {
                 products = { products }
                 lineItems = { lineItems }
               />
-              <Routes>
-                <Route path='/homepage' element={<Homepage />} />
-              </Routes>
             </main>
             </>
         ):(

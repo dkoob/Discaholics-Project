@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Link, HashRouter, Routes, Route } from 'react-router-dom';
-import Products from './Products';
-import Orders from './Orders';
-import Cart from './Cart';
-import Login from './Login';
+import Products from './components/Products';
+import Orders from './components/Orders';
+import Cart from './components/Cart';
+import Login from './components/Login';
 import api from './api';
 
 const App = ()=> {
@@ -46,6 +46,9 @@ const App = ()=> {
     }
   }, [auth]);
 
+  const createUser = async(user)=> {
+    await api.createUser({ email_address, password, username})
+  }
 
   const createLineItem = async(product)=> {
     await api.createLineItem({ product, cart, lineItems, setLineItems});
@@ -70,6 +73,10 @@ const App = ()=> {
   const cartCount = cartItems.reduce((acc, item)=> {
     return acc += item.quantity;
   }, 0);
+
+  const signup = async(information)=> {
+    await api.signup({ information })
+  }
 
   const login = async(credentials)=> {
     await api.login({ credentials, setAuth });
@@ -117,7 +124,10 @@ const App = ()=> {
             </>
         ):(
           <div>
-            <Login login={ login }/>
+            <Login 
+              login={ login }
+              signup={ signup }
+            />
             <Products
               products={ products }
               cartItems = { cartItems }

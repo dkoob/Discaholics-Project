@@ -33,9 +33,9 @@ const authenticate = async(credentials)=> {
   const SQL = `
     SELECT id, password
     FROM users
-    WHERE username = $1
+    WHERE email_address = $1
   `;
-  const response = await client.query(SQL, [credentials.username]);
+  const response = await client.query(SQL, [credentials.email_address]);
   if(!response.rows.length){
     const error = Error('bad credentials');
     error.status = 401;
@@ -52,14 +52,14 @@ const authenticate = async(credentials)=> {
 };
 
 const createUser = async(user)=> {
-  if(!user.username.trim() || !user.password.trim()){
-    throw Error('must have username and password');
+  if(!user.email_address.trim() || !user.password.trim()){
+    throw Error('must have email and password');
   }
   user.password = await bcrypt.hash(user.password, 5);
   const SQL = `
-    INSERT INTO users (id, username, password, is_admin) VALUES($1, $2, $3, $4) RETURNING *
+    INSERT INTO users (id, username, password, email_address) VALUES($1, $2, $3, $4) RETURNING *
   `;
-  const response = await client.query(SQL, [ uuidv4(), user.username, user.password, user.is_admin ]);
+  const response = await client.query(SQL, [ uuidv4(), user.username, user.password, user.email_address ]);
   return response.rows[0];
 };
 

@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express.Router();
-const { isLoggedIn, isAdmin } = require('./middleware');
+const { isLoggedIn, isAdmin } = require('./components/middleware');
 
-app.use('/products', require('./products'));
-app.use('/', require('./auth'));
-app.use('/orders', require('./orders'));
-app.use('/lineItems', require('./lineItems'));
+app.use('/products', require('./components/products'));
+app.use('/', require('./components/auth'));
+app.use('/orders', require('./components/orders'));
+app.use('/lineItems', require('./components/lineItems'));
+app.use('/users', require('./components/users'));
 
 module.exports = app;

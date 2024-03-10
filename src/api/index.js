@@ -8,6 +8,7 @@ const getHeaders = ()=> {
   };
 };
 
+
 const fetchProducts = async(setProducts)=> {
   const response = await axios.get('/api/products');
   setProducts(response.data);
@@ -65,6 +66,11 @@ const attemptLoginWithToken = async(setAuth)=> {
   }
 }
 
+const signup = async({ information }) => {
+  const response = await axios.post('/api/users', information);
+  return response.data
+}
+
 const login = async({ credentials, setAuth })=> {
   const response = await axios.post('/api/login', credentials);
   const { token } = response.data;
@@ -87,7 +93,8 @@ const api = {
   updateLineItem,
   updateOrder,
   removeFromCart,
-  attemptLoginWithToken
+  attemptLoginWithToken,
+  signup
 };
 
 export default api;
